@@ -1,0 +1,44 @@
+# https://taskfile.dev
+version: '3'
+
+interval: 500ms # default interval for watch tasks is 5s
+
+tasks:
+  default:
+    description: Default task; test and coverage
+    cmds:
+      - task: test
+      - task: coverage
+    watch: true
+    sources:
+      - "**/*.go"
+
+  test:
+    description: Run tests
+    cmds:
+      - go test -v ./...
+      - task: coverage
+    silent: true
+
+  coverage:
+    description: Generate coverage report and print it to the console
+    cmds:
+      - go test -coverprofile=coverage.out ./...
+      - go tool cover -func=coverage.out
+
+  html-coverage:
+    description: Generate HTML coverage report and open it in the browser
+    cmds:
+      - task: coverage      
+      - go tool cover -html=coverage.out
+
+  build:
+    description: Build the binary
+    cmds:
+      - go build -o bin/calcweb
+
+  run:
+    description: Run the binary
+    cmds:
+      - task: build
+      - bin/calcweb

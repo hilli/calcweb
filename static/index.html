@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <!-- <script src="https://unpkg.com/htmx.org"></script> -->
+    <script src="htmx-1.9.2-min.js"></script>
+</head>
+<body>
+    <form hx-post="/calculate" hx-trigger="click" hx-target="#result">
+        <input type="number" name="first" required>
+        <select name="operation">
+            <option value="add">+</option>
+            <option value="subtract">-</option>
+            <option value="multiply">*</option>
+            <option value="divide">/</option>
+        </select>
+        <input type="number" name="second" required>
+        <button type="submit">Calculate</button>
+    </form>
+    <div id="result"></div>
+</body>
+</html>
