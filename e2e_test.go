@@ -116,10 +116,11 @@ func Test_Operations(t *testing.T) {
 	}
 
 	for _, tt := range TT {
-		gotoFrontPage(page)
-		fmt.Println("Testing", tt.Name)
-		fillAndSubmit(page, tt.First, tt.Second, tt.Operation)
-		result := findResult(page)
-		assertEqual(t, tt.Expexted, result)
+		t.Run(tt.Name, func(t *testing.T) { // Do subtests
+			gotoFrontPage(page)
+			fillAndSubmit(page, tt.First, tt.Second, tt.Operation)
+			result := findResult(page)
+			assertEqual(t, tt.Expexted, result)
+		})
 	}
 }
