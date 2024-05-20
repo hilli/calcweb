@@ -1,14 +1,42 @@
-package main
+package main_test
 
 import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"reflect"
 	"testing"
+	"webcalc/calc"
 
 	"github.com/playwright-community/playwright-go"
 )
+
+var page playwright.Page
+
+// TestMain controls test execution
+// Useful in cases where you need setup and teardown
+func TestMain(m *testing.M) {
+	// Start webservice
+	go setup_webcalc()
+
+	// Get playwright
+	err := playwright.Install()
+	if err != nil {
+		log.Fatal("Can install playwright or browsers", err)
+	}
+
+	// Configure playwright and get us a page
+	page = setup_playwright()
+	// Run the tests
+	e := m.Run()
+
+	// teardown
+	// none of that
+
+	// Repost test exit status
+	os.Exit(e)
+}
 
 func assertErrorToNilf(message string, err error) {
 	if err != nil {
@@ -23,13 +51,7 @@ func assertEqual(t *testing.T, expected, actual interface{}) {
 }
 
 func setup_webcalc() {
-	// Get playwright
-	err := playwright.Install()
-	if err != nil {
-		log.Fatal("Can install playwright or browsers", err)
-	}
-
-	http.HandleFunc("/calculate", calculatorHandler)
+	http.HandleFunc("/calculate", calc.CalculatorHandler)
 	http.Handle("/", http.FileServer(http.Dir("./static")))
 
 	fmt.Println("Server is running on port 8080")
@@ -80,9 +102,6 @@ func findResult(page playwright.Page) string {
 }
 
 func Test_Operations(t *testing.T) {
-	go setup_webcalc()
-	page := setup_playwright()
-
 	var TT = []struct {
 		Name      string
 		First     string

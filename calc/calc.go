@@ -1,4 +1,4 @@
-package main
+package calc
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func calculatorHandler(w http.ResponseWriter, r *http.Request) {
+func CalculatorHandler(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		http.Error(w, "Could not parse form", http.StatusBadRequest)
