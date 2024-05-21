@@ -44,3 +44,9 @@ tasks:
     cmds:
       - bin/calcweb
     deps: [build]
+
+  cleanup:
+    desc: Cleanup the project
+    cmds:
+      - rm -rf bin coverage.out .task
+    silent: true
