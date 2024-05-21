@@ -1,6 +1,9 @@
 # https://taskfile.dev
 version: '3'
 
+vars:
+  BIN: bin/calcweb
+
 interval: 500ms # default interval for watch tasks is 5s
 
 tasks:
@@ -33,7 +36,7 @@ tasks:
   build:
     desc: Build the binary
     cmds:
-      - go build -o bin/calcweb
+      - go build -o {{.BIN}}
     sources:
       - "**/*.go"
     generates:
@@ -42,11 +45,11 @@ tasks:
   run:
     desc: Run the binary
     cmds:
-      - bin/calcweb
+      - "{{.BIN}}"
     deps: [build]
 
   cleanup:
     desc: Cleanup the project
     cmds:
-      - rm -rf bin coverage.out .task
+      - rm -rf {{.BIN}} coverage.out .task
     silent: true
