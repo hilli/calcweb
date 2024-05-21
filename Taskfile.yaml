@@ -7,7 +7,6 @@ tasks:
   default:
     desc: Default task; test and coverage
     cmds:
-      - task: test
       - task: coverage
     watch: true
     sources:
@@ -17,13 +16,12 @@ tasks:
     desc: Run tests
     cmds:
       - go test -v ./...
-      - task: coverage
     silent: true
 
   coverage:
     desc: Generate coverage report and print it to the console
     cmds:
-      - go test -coverprofile=coverage.out ./...
+      - go test -v -coverprofile=coverage.out ./...
       - go tool cover -func=coverage.out
 
   html-coverage:
@@ -36,9 +34,13 @@ tasks:
     desc: Build the binary
     cmds:
       - go build -o bin/calcweb
+    sources:
+      - "**/*.go"
+    generates:
+      - bin/calcweb
 
   run:
     desc: Run the binary
     cmds:
-      - task: build
       - bin/calcweb
+    deps: [build]

@@ -113,6 +113,7 @@ func Test_Operations(t *testing.T) {
 		{"Multiplying", "2", "8", "multiply", "16"},
 		{"Division", "12", "3", "divide", "4"},
 		{"Subtraction", "10", "7", "subtract", "3"},
+		{"Division by zero", "10", "0", "divide", ""},
 	}
 
 	for _, tt := range TT {

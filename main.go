@@ -10,6 +10,9 @@ func main() {
 	http.HandleFunc("/calculate", calc.CalculatorHandler)
 	http.Handle("/", http.FileServer(http.Dir("./static")))
 
-	fmt.Println("Server is running on port 8080")
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("Server is running on at http://localhost:8080")
+	err := http.ListenAndServe("localhost:8080", nil)
+	if err != nil {
+		panic("Failed to start server: " + err.Error())
+	}
 }
