@@ -40,7 +40,7 @@ tasks:
     sources:
       - "**/*.go"
     generates:
-      - bin/calcweb
+      - "{{.BIN}}"
 
   run:
     desc: Run the binary
