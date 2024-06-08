@@ -12,20 +12,25 @@ tasks:
     cmds:
       - task: coverage
     watch: true
-    sources:
-      - "**/*.go"
 
   test:
     desc: Run tests
     cmds:
       - go test -v ./...
     silent: true
+    sources:
+      - "**/*.go"
+
 
   coverage:
     desc: Generate coverage report and print it to the console
     cmds:
       - go test -v -coverprofile=coverage.out ./...
       - go tool cover -func=coverage.out
+    sources:
+      - "**/*.go"
+    generates:
+      - coverage.out
 
   html-coverage:
     desc: Generate HTML coverage report and open it in the browser
